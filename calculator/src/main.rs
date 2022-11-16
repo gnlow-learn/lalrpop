@@ -1,13 +1,12 @@
 #[macro_use] extern crate lalrpop_util;
-lalrpop_mod!(pub calculator3);
 
-use calculator3::ExprParser;
+lalrpop_mod!(pub calculator4);
+pub mod ast;
 
-//#[test]
-fn main() {
-    assert!(ExprParser::new().parse("22").is_ok());
-    assert!(ExprParser::new().parse("(22)").is_ok());
-    assert!(ExprParser::new().parse("((((22))))").is_ok());
-    assert!(ExprParser::new().parse("((22)").is_err());
-    println!("{:?}", ExprParser::new().parse("2 + 3 * 4"));
+#[test]
+fn calculator4() {
+    let expr = calculator4::ExprParser::new()
+        .parse("22 * 44 + 66").unwrap();
+    println!("{:?}", expr);
+    assert_eq!(&format!("{:?}", expr), "((22 * 44) + 66)");
 }
